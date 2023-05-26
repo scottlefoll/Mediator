@@ -6,15 +6,6 @@
 #include "colleague.h"
 
 using namespace std;
-
-// This block was changed / added ***************
-// Define enum for messages, instead of magic strings
-enum class Message {
-    MOVE,
-    ADVANCE,
-    DRAW
-};
-
 class Mediator
 {
 protected:
@@ -23,26 +14,16 @@ protected:
 public:
    void notify(string message)
    {
-	  // This block was changed / added ***************
       if (message == string("move"))
       {
-		 // for (AbstractColleague colleague : colleagues)
-		 // This block was changed / added ***************
-         for (AbstractColleague* colleague : colleagues)
+	      for (AbstractColleague* colleague : colleagues)
          {
-            colleague.notify(Message::ADVANCE);
-            colleague.notify(Message::ADVANCE);
+            colleague->notify("move");
+            colleague->notify("draw");
          }
       }
    }
 
-   // void addStandard(StandardColleague newCol)
-   // {
-   //   colleagues.push_back(newCol);
-   // }
-   
-   // This block was changed / added ***************
-   // includees dynamic mem alloc
    void addColleague(AbstractColleague* newCol)
    {
       colleagues.push_back(newCol);
@@ -57,6 +38,5 @@ public:
            delete colleague;
        }
    }
-   
 };
 

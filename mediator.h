@@ -16,24 +16,10 @@ public:
    {
       if (message == string("move"))
       {
-         for (AbstractColleague colleague : colleagues)
-         {
-            colleague.notify("move");
-            colleague.notify("draw");
-         }
-      }
-   }
-
-
-public:
-   void notify(string message)
-   {
-      if (message == string("move"))
-      {
 	      for (AbstractColleague* colleague : colleagues)
          {
-            colleague.notify("move");
-            colleague.notify("move");
+            colleague->notify("move");
+            colleague->notify("draw");
          }
       }
    }
