@@ -10,6 +10,7 @@
 #include "point.h"
 #include <cmath>
 #include <cassert>
+#include <limits>
 
 /******************************************
  * POINT : CONSTRUCTOR WITH X,Y
@@ -71,9 +72,9 @@ std::istream & operator >> (std::istream & in, Point & pt)
 
    return in;
 }
-   
+
 double minimumDistance(const Point & pt1, const Velocity & v1,
-                       const Point & pt2, const Velocity & v2) 
+                       const Point & pt2, const Velocity & v2)
 {
    double d1 = max(abs(v1.getDx()), abs(v1.getDy()));
    double d2 = max(abs(v2.getDx()), abs(v2.getDy()));
@@ -82,10 +83,10 @@ double minimumDistance(const Point & pt1, const Velocity & v1,
 
    // we will move by this number
    double distMin = std::numeric_limits<double>::max();
-      
+
    // what % of the speed will we be working with?
    double slice = 1.0 / dMax;
-   
+
    // go through each percentage points
    for (double percent = 0.0; percent <= 1.0; percent += slice)
    {

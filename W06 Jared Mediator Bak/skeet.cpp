@@ -25,7 +25,7 @@ using namespace std;
 #ifdef _WIN32
 #include <stdio.h>
 #include <stdlib.h>
-#include <GL/glut.h>         // OpenGL library we copied 
+#include <GL/glut.h>         // OpenGL library we copied
 #define _USE_MATH_DEFINES
 #include <math.h>
 #define GLUT_TEXT GLUT_BITMAP_HELVETICA_12
@@ -38,7 +38,7 @@ using namespace std;
 void Skeet::animate()
 {
    time++;
-   
+
    // if status, then do not move the game
    if (time.isStatus())
    {
@@ -48,10 +48,10 @@ void Skeet::animate()
       effects.clear();
       return;
    }
-   
+
    // spawn
    spawn();
-   
+
    // move the birds and the bullets
    /*for (auto element : birds)
    {
@@ -65,7 +65,7 @@ void Skeet::animate()
       bullet->move(effects);
    for (auto effect : effects)
       effect->fly();
-      
+
    // hit detection
    for (auto element : birds)
       for (auto bullet : bullets)
@@ -80,7 +80,7 @@ void Skeet::animate()
             bullet->kill();
             hitRatio.adjust(1);
          }
-   
+
    // remove the zombie birds
    for (auto it = birds.begin(); it != birds.end();)
       if ((*it)->isDead())
@@ -90,7 +90,7 @@ void Skeet::animate()
       }
       else
          ++it;
-       
+
    // remove zombie bullets
    for (auto it = bullets.begin(); it != bullets.end(); )
       if ((*it)->isDead())
@@ -100,7 +100,7 @@ void Skeet::animate()
       }
       else
          ++it;
-   
+  
    // remove zombie fragments
    for (auto it = effects.begin(); it != effects.end();)
       if ((*it)->isDead())
@@ -329,14 +329,14 @@ void Skeet::interact(const UserInput & ui)
    // bombs can be shot at level 3 and higher
    else if (ui.isB() && time.level() > 2)
       p = new Bomb(gun.getAngle());
-   
+
    // add something if something has been added
    if (nullptr != p)
    {
       bullets.push_back(p);
       score.adjust(0 - p->getValue());
    }
-   
+
    // send movement information to all the bullets. Only the missile cares.
    for (auto bullet : bullets)
       bullet->input(ui.isUp() + ui.isRight(), ui.isDown() + ui.isLeft(), ui.isB()); 
@@ -374,17 +374,17 @@ void Skeet::spawn()
          if (birds.size() == 0 && random(0, 15) == 1) {
             // mediator.addStandard(StandardColleague(Standard(size, 7.0)));
             // birds.push_back(new Standard(size, 7.0));
-         
+
 			// This block was changed / added ***************
 			StandardColleague* newCol = new StandardColleague(Standard(size, 7.0));
             mediator.addColleague(newCol);
 		}
-			 
+
          // spawn every 4 seconds
          // if (random(0, 4 * 30) == 1)
             // birds.push_back(new Standard(size, 7.0));
          // break;
-		 
+
 		 // This block was changed / added ***************
 		 // spawn every 4 seconds
 		 if (random(0, 4 * 30) == 1) {
@@ -407,7 +407,7 @@ void Skeet::spawn()
          if (random(0, 3 * 30) == 1)
             birds.push_back(new Sinker(size));
          break;
-      
+
       // three kinds of birds in level 3
       case 3:
          size = 20.0;
@@ -425,7 +425,7 @@ void Skeet::spawn()
          if (random(0, 4 * 30) == 1)
             birds.push_back(new Floater(size));
          break;
-         
+
       // three kinds of birds in level 4
       case 4:
          size = 15.0;
@@ -446,7 +446,7 @@ void Skeet::spawn()
          if (random(0, 4 * 30) == 1)
             birds.push_back(new Crazy(size));
          break;
-         
+
       default:
          break;
    }

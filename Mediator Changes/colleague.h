@@ -20,7 +20,7 @@ protected:
 public:
    // virtual void notify(string message);  // add some stuff here????
    // This three lines were changed / added ***************
-   virtual void notify(Message message) = 0;
+   virtual void notify(string message) = 0;
    virtual void draw() = 0; // pure virtual function
    virtual void advance() = 0; // pure virtual function
    
@@ -34,7 +34,7 @@ private:
 
 public:
    SinkerColleague(Sinker newBird) { bird = newBird; };
-   void notify(Message message) override
+   void notify(string message) override
    {
       if (message == Message::ADVANCE)
          advance();
@@ -52,7 +52,7 @@ private:
 
 public:
    StandardColleague(Standard newBird) { bird = newBird; };
-   void notify(Message message) override
+   void notify(string message) override
    {
       if (message == Message::ADVANCE)
          advance();
@@ -70,7 +70,7 @@ private:
 
 public:
    CrazyColleague(Crazy newBird) { bird = newBird; };
-   void notify(Message message) override
+   void notify(string message) override
 
    {
       if (message == Message::ADVANCE)
@@ -89,7 +89,7 @@ private:
 
 public:
    FloaterColleague(Floater newBird) { bird = newBird; };
-   void notify(Message message) override
+   void notify(string message) override
    {
       if (message == Message::ADVANCE)
          advance();

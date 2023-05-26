@@ -16,15 +16,14 @@ using namespace std;
 class AbstractColleague
 {
 protected:
-   //Mediator mediator;
+   Mediator& mediator;
 
 public:
-   // virtual void notify(string message);  // add some stuff here????
-   // This three lines were changed / added ***************
-   virtual void notify(Message message) = 0;
+   AbstractColleague(Mediator& mediator) : mediator(mediator) {}
+   virtual void notify(string message) = 0;
    virtual void draw() = 0; // pure virtual function
    virtual void advance() = 0; // pure virtual function
-   
+
 };
 
 
@@ -35,14 +34,11 @@ private:
 
 public:
    SinkerColleague(Sinker newBird) { bird = newBird; };
-   // This line was changed / added for the ENUM***************
-   void notify(Message message) override
+   void notify(string message) override
    {
-	  // This line was changed / added ***************
-      if (message == Message::ADVANCE)
+      if (message == "move")
          advance();
-	  // This line was changed / added ***************
-      if (message == Message::DRAW)
+      if (message == "draw")
          draw();
    }
    void draw() { bird.draw(); }
@@ -56,14 +52,11 @@ private:
 
 public:
    StandardColleague(Standard newBird) { bird = newBird; };
-   // This line was changed / added for the ENUM***************
-   void notify(Message message) override
+   void notify(string message) override
    {
-	  // This line was changed / added ***************
-      if (message == Message::ADVANCE)
+      if (message == "move")
          advance();
-	  // This line was changed / added ***************
-      if (message == Message::DRAW)
+      if (message == "draw")
          draw();
    }
    void draw() { bird.draw(); }
@@ -77,15 +70,12 @@ private:
 
 public:
    CrazyColleague(Crazy newBird) { bird = newBird; };
-   // This line was changed / added for the ENUM***************
-   void notify(Message message) override
+   void notify(string message) override
 
    {
-	  // This line was changed / added ***************
-      if (message == Message::ADVANCE)
+      if (message == "move")
          advance();
-	  // This line was changed / added ***************
-      if (message == Message::DRAW)
+      if (message == "draw")
          draw();
    }
    void draw() { bird.draw(); }
@@ -99,14 +89,11 @@ private:
 
 public:
    FloaterColleague(Floater newBird) { bird = newBird; };
-   // This line was changed / added for the ENUM ***************
-   void notify(Message message) override
+   void notify(string message) override
    {
-	  // This line was changed / added ***************
-      if (message == Message::ADVANCE)
+      if (message == "move")
          advance();
-	  // This line was changed / added ***************
-      if (message == Message::DRAW)
+      if (message == "draw")
          draw();
    }
    void draw() { bird.draw(); }

@@ -21,10 +21,10 @@ protected:
    vector <AbstractColleague*> colleagues;//list of colleagues
 
 public:
-   void notify(Message message)
+   void notify(string message)
    {
 	  // This block was changed / added ***************
-      if (message == Message::MOVE)
+      if (message == string("move"))
       {
 		 // for (AbstractColleague colleague : colleagues)
 		 // This block was changed / added ***************
