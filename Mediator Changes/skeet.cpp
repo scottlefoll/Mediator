@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 #include "skeet.h"
+#include "mediator.h"
+#include "colleague.h"
 using namespace std;
 
 
@@ -38,7 +40,7 @@ using namespace std;
 void Skeet::animate()
 {
    time++;
-
+   
    // if status, then do not move the game
    if (time.isStatus())
    {
@@ -48,10 +50,10 @@ void Skeet::animate()
       effects.clear();
       return;
    }
-
+   
    // spawn
    spawn();
-
+   
    mediator.notify("move");
 
 
@@ -59,7 +61,7 @@ void Skeet::animate()
       bullet->move(effects);
    for (auto effect : effects)
       effect->fly();
-
+      
    // hit detection
    for (auto element : birds)
       for (auto bullet : bullets)
@@ -74,7 +76,7 @@ void Skeet::animate()
             bullet->kill();
             hitRatio.adjust(1);
          }
-
+   
    // remove the zombie birds
    for (auto it = birds.begin(); it != birds.end();)
       if ((*it)->isDead())
@@ -84,7 +86,7 @@ void Skeet::animate()
       }
       else
          ++it;
-
+       
    // remove zombie bullets
    for (auto it = bullets.begin(); it != bullets.end(); )
       if ((*it)->isDead())
@@ -94,7 +96,7 @@ void Skeet::animate()
       }
       else
          ++it;
-
+   
    // remove zombie fragments
    for (auto it = effects.begin(); it != effects.end();)
       if ((*it)->isDead())
@@ -323,14 +325,14 @@ void Skeet::interact(const UserInput & ui)
    // bombs can be shot at level 3 and higher
    else if (ui.isB() && time.level() > 2)
       p = new Bomb(gun.getAngle());
-   
+
    // add something if something has been added
    if (nullptr != p)
    {
       bullets.push_back(p);
       score.adjust(0 - p->getValue());
    }
-   
+
    // send movement information to all the bullets. Only the missile cares.
    for (auto bullet : bullets)
       bullet->input(ui.isUp() + ui.isRight(), ui.isDown() + ui.isLeft(), ui.isB()); 
@@ -370,64 +372,88 @@ void Skeet::spawn()
             mediator.addColleague(newCol);
 		}
 
+		 // spawn every 4 seconds
 		 if (random(0, 4 * 30) == 1) {
             StandardColleague* newCol = new StandardColleague(Standard(size, 7.0));
             mediator.addColleague(newCol);
          }
 
          break;
+
       // two kinds of birds in level 2
       case 2:
          size = 25.0;
          // spawns when there is nothing on the screen
-         if (birds.size() == 0 && random(0, 15) == 1)
-            birds.push_back(new Standard(size, 7.0, 12));
-
+         if (birds.size() == 0 && random(0, 15) == 1) {
+            StandardColleague* newCol = new StandardColleague(Standard(size, 7.0, 12));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Standard(size, 5.0, 12));
+         if (random(0, 4 * 30) == 1) {
+            StandardColleague* newCol = new StandardColleague(Standard(size, 5.0, 12));
+            mediator.addColleague(newCol);
+            }
          // spawn every 3 seconds
-         if (random(0, 3 * 30) == 1)
+         if (random(0, 3 * 30) == 1) {
             birds.push_back(new Sinker(size));
+            SinkerColleague* newCol = new SinkerColleague(Sinker(size));
+            mediator.addColleague(newCol);
+            }
          break;
 
       // three kinds of birds in level 3
       case 3:
          size = 20.0;
          // spawns when there is nothing on the screen
-         if (birds.size() == 0 && random(0, 15) == 1)
-            birds.push_back(new Standard(size, 5.0, 15));
-
+         if (birds.size() == 0 && random(0, 15) == 1) {
+            StandardColleague* newCol = new StandardColleague(Standard(size, 5.0, 15));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Standard(size, 5.0, 15));
+         if (random(0, 4 * 30) == 1) {
+            StandardColleague* newCol = new StandardColleague(Standard(size, 5.0, 15));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Sinker(size, 4.0, 22));
+         if (random(0, 4 * 30) == 1) {
+            SinkerColleague* newCol = new SinkerColleague(Sinker(size, 4.0, 22));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Floater(size));
+         if (random(0, 4 * 30) == 1) {
+            FloaterColleague* newCol = new FloaterColleague(Floater(size));
+            mediator.addColleague(newCol);
+            }
          break;
 
       // three kinds of birds in level 4
       case 4:
          size = 15.0;
          // spawns when there is nothing on the screen
-         if (birds.size() == 0 && random(0, 15) == 1)
-            birds.push_back(new Standard(size, 4.0, 18));
-
+         if (birds.size() == 0 && random(0, 15) == 1) {
+            StandardColleague* newCol = new StandardColleague(Standard(size, 4.0, 18));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Standard(size, 4.0, 18));
+         if (random(0, 4 * 30) == 1) {
+            StandardColleague* newCol = new StandardColleague(Standard(size, 4.0, 18));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Sinker(size, 3.5, 25));
+         if (random(0, 4 * 30) == 1) {
+            SinkerColleague* newCol = new SinkerColleague(Sinker(size, 3.5, 25));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Floater(size, 4.0, 25));
+         if (random(0, 4 * 30) == 1) {
+            FloaterColleague* newCol = new FloaterColleague(Floater(size, 4.0, 25));
+            mediator.addColleague(newCol);
+            }
          // spawn every 4 seconds
-         if (random(0, 4 * 30) == 1)
-            birds.push_back(new Crazy(size));
+         if (random(0, 4 * 30) == 1) {
+            CrazyColleague* newCol = new CrazyColleague(Crazy(size));
+            mediator.addColleague(newCol);
+            }
          break;
 
       default:
